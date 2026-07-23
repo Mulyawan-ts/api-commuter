@@ -2,10 +2,7 @@ module api-commuter
 
 go 1.26.2
 
-require (
-	github.com/gin-gonic/gin v1.12.0
-	github.com/labstack/echo/v5 v5.3.1
-)
+require github.com/labstack/echo/v5 v5.3.1
 
 require (
 	github.com/bytedance/gopkg v0.1.4 // indirect
