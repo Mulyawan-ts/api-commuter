@@ -3,22 +3,21 @@ package main
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+	"github.com/labstack/echo/v5"
+	"github.com/labstack/echo/v5/middleware"
 )
 
 func main() {
-	// Create a Gin router with default middleware (logger and recovery)
-	r := gin.Default()
+	e := echo.New()
 
-	// Define a simple GET endpoint
-	r.GET("/ping", func(c *gin.Context) {
-		// Return JSON response
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
+	e.Use(middleware.RequestLogger())
+	e.Use(middleware.Recover())
+
+	e.GET("/", func(c *echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]string{"message": "Hello, World!"})
 	})
 
-	// Start server on port 8080 (default)
-	// Server will listen on 0.0.0.0:8080 (localhost:8080 on Windows)
-	r.Run()
+	if err := e.Start(":1323"); err != nil {
+		e.Logger.Error("failed to start server", "error", err)
+	}
 }
